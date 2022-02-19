@@ -28,9 +28,17 @@ def check():
     else:
         print(answer)
 
-def count100(r):
-    Ct1000=math.floor(r/1000)
-    Ct100=math.floor((r-Ct1000*1000)/100)
+def count10():
+    st10=''
+    if Ct10==0:
+        st10=''
+    elif Ct10==1:
+        st10='じゅう'
+    else:
+        st10=numberN[Ct10][0]+'じゅう'
+    return st10
+
+def count100():
     st100=''
     if Ct100==3:
         st100=numberN[Ct100][0]+hundredN[1]
@@ -44,8 +52,7 @@ def count100(r):
         st100=numberN[Ct100][0]+hundredN[0]
     return st100
 
-def count1000(r):
-    Ct1000=math.floor(r/1000)
+def count1000():
     st1000=''
     if Ct1000==3:
         st1000=numberN[Ct1000][0]+thausandN[1]
@@ -83,45 +90,29 @@ while s!='q':
         r=random.randint(1,p)
         question=r
         print(question)
-        Ct10=0
-        Ct100=0
-        Ct1000=0
+        Ct1000=math.floor(r/1000)
+        Ct100=math.floor((r-Ct1000*1000)/100)
+        Ct10=math.floor((r-Ct1000*1000-Ct100*100)/10)
         CtRm=r%10
 
-        if question<=10:
+        if question<10:
             answer=numberN[r][0]
 
-        elif question>10 and question<20:
-            answer=numberN[9][0]+numberN[CtRm][0]
-
-        elif question>=20 and question<99:
+        elif question>=10 and question<100:
             Ct10=math.floor(r/10)
-            answer=numberN[Ct10][0]+'じゅう'+numberN[CtRm][0]
+            answer=count10()+numberN[CtRm][0]
 
         elif question>=100 and question<1000:
-            Ct100=math.floor((r-Ct1000*1000)/100)
-            Ct10=math.floor((r-Ct100*100)/10)
             if CtRm==0:
-                answer=count100(r)+numberN[Ct10][0]+'じゅう'
-            elif CtRm==0 and Ct10==1:
-                answer=count100(r)+'じゅう'
-            elif Ct10==0:
-                answer=count100(r)+numberN[CtRm][0]
+                answer=count100()+count10()
             else:
-                answer=count100(r)+numberN[Ct10][0]+'じゅう'+numberN[CtRm][0]
+                answer=count100()+count10()+numberN[CtRm][0]
 
         elif question>=1000 and question<10000:
-            Ct1000=math.floor(r/1000)
-            Ct100=math.floor((r-Ct1000*1000)/100)
-            Ct10=math.floor((r-Ct1000*1000-Ct100*100)/10)
             if CtRm==0:
-                answer=count1000(r)+count100(r)+numberN[Ct10][0]+'じゅう'
-            elif CtRm==0 and Ct10==1:
-                answer=count1000(r)+count100(r)+'じゅう'
-            elif Ct10==0:
-                answer=count1000(r)+count100(r)+numberN[CtRm][0]
+                answer=count1000()+count100()+count10()
             else:
-                answer=count1000(r)+count100(r)+numberN[Ct10][0]+'じゅう'+numberN[CtRm][0]
+                answer=count1000()+count100()+count10()+numberN[CtRm][0]
 
         s=input()
         check()
