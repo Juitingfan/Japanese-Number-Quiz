@@ -1,19 +1,16 @@
 import random
 import math
 
-ctN=[('まる',''),('ひとつ','ついたち'),('ふたつ','ふつ'),('みっつ','みっ'),('よっつ','よっ'),('いつつ','いつ'),('むっつ','むい'),('ななつ','なの'),('やっつ','よう'),('ここのつ','ここの'),('とお',''),('はつか','')]
+ctN=[('まる',''),('ひとつ','ついたち'),('ふたつ','ふつ'),('みっつ','みっ'),('よっつ','よっ'),('いつつ','いつ'),('むっつ','むい'),('ななつ','なの'),('やっつ','よう'),('ここのつ','ここの'),('とお',''),('はつ','')]
 numberN=[('れい',''),('いち','いっ'),('に',''),('さん',''),('よん','し','よ'),('ご',''),('ろく','ろっ'),('なな','しち'),('はち','はっ'),('きゅう','く'),('じゅう','じっ')]
 hundredN=['ひゃく','びゃく','ぴゃく']
 thausandN=['せん','ぜん']
-TenThausandN='まん'
 
 yearU='ねん'
 monthU='がつ'
 monthCt1U='かげつ'
-monthCt2U='かげつけん'
 dayU=['か','にち']
-dayCt1U=['にち','か']
-datCt2U=['じゅう','かん']
+datCtU=['じゅう','かん']
 weekCtU='じゅうかん'
 OclockU='じ'
 minuteU=['ぷん','ふん']
@@ -23,9 +20,9 @@ pos=['まえ','ごろ','ぐらい']
 
 def check(answer,s):
     if s==answer:
-        print('correct')
+        print('Correct')
     else:
-        print('W/A, Answer is',answer)
+        print('W/A, the answer is',answer)
 
 def count10(Ct10):
     st10=''
@@ -104,12 +101,132 @@ def QuizNumber():
     s=input()
     check(answer,s)
 
-print('Press ENTER to start, q to exit.')
+def QuizYear():
+    p=10
+    r=random.randint(1,p)
+    question=str(r)+'年'
+    if r==4 or r==9 or r==7:
+        answer=numberN[r][1]+yearU
+    else:
+        answer=numberN[r][0]+yearU
+    print(question)
+    s=input()
+    check(answer,s)
+
+def QuizMonth():
+    p=12
+    r=random.randint(1,p)
+    question=str(r)+'月'
+    if r==4 or r==9 or r==7:
+        answer=numberN[r][1]+monthU
+    elif r==11:
+        answer=numberN[10][0]+numberN[1][1]+monthU
+    elif r==12:
+        answer=numberN[10][0]+numberN[2][0]+monthU
+    else:
+        answer=numberN[r][0]+monthU
+    print(question)
+    s=input()
+    check(answer,s)
+
+def QuizMonthCt1():
+    p=12
+    r=random.randint(1,p)
+    question=str(r)+'か月'
+    if r==1 or r==6 or r==10:
+        answer=numberN[r][1]+monthCt1U
+    elif r+1==11:
+        answer=numberN[10][0]+numberN[1][1]+monthCt1U
+    elif r+1==12:
+        answer=numberN[10][0]+numberN[2][0]+monthCt1U
+    else:
+        answer=numberN[r][0]+monthCt1U
+    print(question)
+    s=input()
+    check(answer,s)
+
+def QuizDay():
+    p=31
+    r=random.randint(1,p)
+    question=str(r)+'日'
+    kaList=[2,3,4,5,6,7,8,9,10,20]
+    diffNumList=[17,27,19,29]
+    Ct10=math.floor(r/10)
+    CtRm=r%10
+    if r==1:
+        answer=ctN[1][1]
+    elif r in kaList:
+        answer=ctN[r][1]+dayU[0]
+    elif r==10:
+        answer=ctN[r][0]+dayU[0]
+    elif r==20:
+        answer=ctN[11][0]+dayU[0]
+    elif r==14 or r==24:
+        answer=count10(Ct10)+numberN[CtRm][1]+dayU[0]
+    elif r in diffNumList:
+        answer=count10(Ct10)+numberN[CtRm][1]+dayU[1]
+    elif CtRm==0:
+        answer=count10(Ct10)+dayU[1]
+    else:
+        answer=count10(Ct10)+numberN[CtRm][0]+dayU[1]
+    print(question)
+    s=input()
+    check(answer,s)
+
+def QuizDayCt1():
+    p=10
+    r=random.randint(1,p)
+    question=str(r)+'日(量)'
+    if r==1:
+        answer=numberN[1][0]+dayU[1]
+    elif r==10:
+        answer=ctN[r][0]+dayU[0]
+    else:
+        answer=ctN[r][1]+dayU[0]
+
+    print(question)
+    s=input()
+    check(answer,s)
+
+def QuizDayCt2():
+    p=10
+    r=random.randint(1,p)
+    if r==1:
+        question=str(r)+'日中'
+    else:
+        question=str(r)+'日間'
+
+    if r==1:
+        answer=numberN[1][0]+dayU[1]+datCtU[0]
+    elif r==10:
+        answer=ctN[r][0]+datCtU[1]
+    else:
+        answer=ctN[r][1]+dayU[0]+datCtU[1]
+
+    print(question)
+    s=input()
+    check(answer,s)
+
+def QuizWeekCt():
+    p=10
+    r=random.randint(1,p)
+    question=str(r)+'週間'
+
+    if r==1 or r==8 or r==10:
+        answer=numberN[r][1]+weekCtU
+    else:
+        answer=numberN[r][0]+weekCtU
+
+    print(question)
+    s=input()
+    check(answer,s)
+
+print('Press ENTER to start, or q to quit.')
 s=input()
 
 while s!='q':
-    qTypeList=['ct','number','year','month','monthCt','monthCt2','day','weekCt','Oclock']
-    p=1
+    qTypeList=['ct','number','year','month','monthCt','day','dayCt1','dayCt2','weekCt','time']
+    p=8
     r=random.randint(0,p)
     qType=qTypeList[r]
 
@@ -117,5 +234,19 @@ while s!='q':
         QuizCt()
     elif qType=='number':
         QuizNumber()
-        
+    elif qType=='year':
+        QuizYear()
+    elif qType=='month':
+        QuizMonth()
+    elif qType=='monthCt':
+        QuizMonth()
+    elif qType=='day':
+        QuizDay()
+    elif qType=='dayCt1':
+        QuizDayCt1()
+    elif qType=='dayCt2':
+        QuizDayCt2()
+    elif qType=='weekCt':
+        QuizWeekCt()
+
     s=input()
