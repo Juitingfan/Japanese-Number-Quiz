@@ -149,7 +149,7 @@ def QuizDay():
     p=31
     r=random.randint(1,p)
     question=str(r)+'日'
-    kaList=[2,3,4,5,6,7,8,9,10,20]
+    kaList=[2,3,4,5,6,7,8,9]
     diffNumList=[17,27,19,29]
     Ct10=math.floor(r/10)
     CtRm=r%10
@@ -162,7 +162,7 @@ def QuizDay():
     elif r==20:
         answer=ctN[11][0]+dayU[0]
     elif r==14 or r==24:
-        answer=count10(Ct10)+numberN[CtRm][1]+dayU[0]
+        answer=count10(Ct10)+ctN[CtRm][1]+dayU[0]
     elif r in diffNumList:
         answer=count10(Ct10)+numberN[CtRm][1]+dayU[1]
     elif CtRm==0:
